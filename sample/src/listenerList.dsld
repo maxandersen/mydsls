@@ -1,0 +1,51 @@
+import org.codehaus.groovy.ast.ClassNode
+import org.codehaus.groovy.ast.FieldNode
+import org.codehaus.groovy.ast.GenericsType
+
+/**
+ * @author Lukasz Pielak and Max Rydahl Andersen
+ */
+currentType(fields : fields(annotatedBy('groovy.beans.ListenerList'))).accept {
+    provider = "Listener List"
+
+    fields.each { field ->
+        def propertyName = field.name
+        propertyName = propertyName.size() == 1 ? propertyName.toUpperCase() : propertyName[0].toUpperCase() + propertyName[1..-1]
+        def type = findElementType(field)
+
+        def shortType = getShortName(type.name)
+        method name: 'add' + shortType, type: 'void', params: [listener: type], doc: 'Add ' + shortType + ' listener'
+        method name: 'remove' + shortType, type: 'void', params: [listener: type], doc: 'Remove ' + shortType + ' listener'
+
+        // TODO array types does not work, result in completions for plain Object.
+        method name: 'get' + shortType + 's', type: "type.name"+[], doc: 'Get ' + shortType + ' listeners'
+
+        findElementType(field).methods.each { m ->
+            method name: 'fire' + m.name.capitalize(), type: "void", params: m.parameters.inject([:]){ map, param ->
+                map[(param.name)] = param.type
+                map
+            }, doc: 'fire the ' + m.name + ' event'
+        }
+    }
+}
+
+def getShortName(String className){
+    int i = className.lastIndexOf(".")
+    if (i > -1){
+        className = className.substring(i+1, className.length())
+    }
+    className
+}
+
+def findElementType(FieldNode field) {
+    ClassNode type = field.type
+    if (type.isArray()) {
+        return type.componentType
+    }
+    GenericsType[] gt = type.genericsTypes
+    if (gt && gt.length > 0) {
+        gt[0]?.type
+    } else {
+        Object
+    }
+}

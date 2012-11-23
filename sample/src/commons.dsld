@@ -1,0 +1,12 @@
+
+/**
+ * @author Lukasz Pielak and Max Rydahl Andersen
+ */
+currentType(annotations: annotatedBy("groovy.util.logging.Commons")).accept {
+    for (annotationNode in annotations){
+        def logName = annotationNode.getMember('value') ?: 'log'
+        property name : logName, type : 'org.apache.commons.logging.Log',
+                provider : 'Commons Logging DSL Transformation',
+                doc : 'Constructs org.apache.commons.logging.Log'
+    }
+}
