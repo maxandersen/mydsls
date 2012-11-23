@@ -1,0 +1,38 @@
+
+def bindableMethods = {
+	provider = "Bindable AST Transform"
+	method name: "addPropertyChangeListener", 
+	       type: "void", 
+		   params: [propertyName: "java.lang.String",
+		   listener: "java.beans.PropertyChangeListener"],
+		   doc: "Add a PropertyChangeListener to the listener list."
+	method name: "addPropertyChangeListener",
+	       type: "void",
+		   params: [listener: "java.beans.PropertyChangeListener"],
+		   doc: "Add a PropertyChangeListener for a specific property."
+	method name: "removePropertyChangeListener",
+	       type: "void",
+		   params: [propertyName: "java.lang.String",
+		   listener: "java.beans.PropertyChangeListener"],
+	       doc: "Remove a PropertyChangeListener from the listener list."
+	method name: "removePropertyChangeListener",
+	       type: "void",
+		   params: [listener: "java.beans.PropertyChangeListener"],
+		   doc: "Remove a PropertyChangeListener for a specific property."
+
+	method name: "firePropertyChange",
+	       type: "void",
+		   params: [propertyName: "java.lang.String", oldValue: "java.lang.Object", newValue: "java.lang.Object"],
+		   doc: "Report a bound property update to any registered listeners."
+
+	method name: "getPropertyChangeListeners",
+	       type: "java.beans.PropertyChangeListener[]",
+		   doc: "Returns an array of all the listeners that were added to the PropertyChangeSupport object with addPropertyChangeListener()."
+	method name: "getPropertyChangeListeners",
+	       type: "java.beans.PropertyChangeListener[]", 
+		   params: [propertyName: "java.lang.String"],
+		   doc: "Returns an array of all the listeners which have been associated with the named property."
+}
+
+currentType(annotatedBy("groovy.beans.Bindable")).accept bindableMethods
+currentType(fields(annotatedBy("groovy.beans.Bindable"))).accept bindableMethods
