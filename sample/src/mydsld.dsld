@@ -1,0 +1,8 @@
+// this is a DSLD file
+// start off creating a custom DSL Descriptor for your Groovy DSL
+
+// The following snippet adds the 'newProp' to all types that are a subtype of GroovyObjects
+currentType(annotatedBy('bean.Greeter')).accept {
+   property name : 'newProp', type : String, provider : 'Sample DSL', doc : 'This is a sample.  You should see this in content assist for GroovyObjects: <pre>newProp</pre>'
+   method name: 'sayHello', type: 'java.lang.String', params: [name: 'java.lang.String']
+}
