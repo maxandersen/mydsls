@@ -1,0 +1,38 @@
+
+def VetoableMethods = {
+	provider = "Vetoable AST Transform"
+	method name: "addVetoableChangeListener", 
+	       type: "void", 
+		   params: [propertyName: "java.lang.String",
+		   listener: "java.beans.VetoableChangeListener"],
+		   doc: "Add a VetoableChangeListener to the listener list."
+	method name: "addVetoableChangeListener",
+	       type: "void",
+		   params: [listener: "java.beans.VetoableChangeListener"],
+		   doc: "Add a VetoableChangeListener for a specific property."
+	method name: "removeVetoableChangeListener",
+	       type: "void",
+		   params: [propertyName: "java.lang.String",
+		   listener: "java.beans.VetoableChangeListener"],
+	       doc: "Remove a VetoableChangeListener from the listener list."
+	method name: "removeVetoableChangeListener",
+	       type: "void",
+		   params: [listener: "java.beans.VetoableChangeListener"],
+		   doc: "Remove a VetoableChangeListener for a specific property."
+
+	method name: "fireVetoableChange",
+	       type: "void",
+		   params: [propertyName: "java.lang.String", oldValue: "java.lang.Object", newValue: "java.lang.Object"],
+		   doc: "Report a bound property update to any registered listeners."
+
+	method name: "getVetoableChangeListeners",
+	       type: "java.beans.VetoableChangeListener[]",
+		   doc: "Returns an array of all the listeners that were added to the VetoableChangeSupport object with addVetoableChangeListener()."
+	method name: "getVetoableChangeListeners",
+	       type: "java.beans.VetoableChangeListener[]", 
+		   params: [propertyName: "java.lang.String"],
+		   doc: "Returns an array of all the listeners which have been associated with the named property."
+}
+
+currentType(annotatedBy("groovy.beans.Vetoable")).accept VetoableMethods
+currentType(fields(annotatedBy("groovy.beans.Vetoable"))).accept VetoableMethods
