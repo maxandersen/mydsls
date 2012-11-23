@@ -1,0 +1,10 @@
+/**
+ * Hackergarten contribution
+ * 
+ * @author Andres Almiray
+ */
+
+enclosingClass(annotatedBy('groovy.transform.AutoExternalize')).accept {
+	provider = "Externalizable AST Transform"
+	delegatesTo "java.io.Externalizable"
+}
