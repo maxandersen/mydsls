@@ -1,0 +1,13 @@
+/* 
+ * @author Tom Bujok (reficio.org)
+ */
+currentType(annotations : annotatedBy("groovy.util.logging.Log")).accept {
+
+	for(annotationNode in annotations) {		
+		def name = annotationNode.getMember('value') ?: 'log'
+		property name : name,
+				type : 'java.util.logging.Logger',
+				provider : 'Log AST Transform',
+				doc : 'java.util.logging.Logger'
+	}
+}
